@@ -6,15 +6,18 @@ const{render, compileFile} = require('pug');
 app.use("/style", express.static("public/css/"));
 
 const mongoose = require('mongoose')
- mongoose.connect("mongodb://127.0.0.1:27017/ead2");
+mongoose.connect("mongodb://127.0.0.1:27017/ead2");
 const Product = require('./models/Product')
 
-// const fileUpload = require('express-fileupload');
-
-const bodyParser = require("body-parser")
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
+const bodyParser = require("body-parser");
+const { response } = require('express');
 // app.use(bodyParser.json())
 app.use(express.json())
  app.use(bodyParser.urlencoded({extended:true}));
+ //app.use("/images", express.static("public/image"));
+ app.use(express.static(path.join(__dirname, "public")));
 //  app.use(express.urlencoded())
 app.set('view engine', 'ejs')
 
@@ -25,16 +28,13 @@ app.get('/create', function(req, res){
 
 app.get("/products", async function(req, res){
     const products = await Product.find();
-    // console.log(products);
     res.render('products', { products }) ;
 })
 
-// app.post('/product/create')
 app.get("/product/getProduct/:pid", async function(req, res){
 const pid = req.params.pid;
 console.log(pid);
 const product = await Product.findById(pid);
-// console.log(prod)
     res.render('productDetail', { product })
 
 });
@@ -58,18 +58,8 @@ app.get("/products/delete/:pid", async function(req, res){
 })
 
 app.post('/product/create', function(req, res){
-    console.log(req.body)
-
-    // const img = req.files;
-    // console.log(img);
-    // img.mv(path.resolve(__dirname, 'public/img', img.name), (err)=>{
-    //     Product.create({...req.body, image: img.name }, (err, product)=>{
-    //         console.log(product)
-    //         res.redirect("/products")
-    //     });
-    // });
-    // const{title, price} = req.body;
-    // console.log(title);
+    
+    console.log("In file upload "+req.files);
     Product.create(req.body, function(err, product){
         console.log(product)
         res.redirect("/products")
