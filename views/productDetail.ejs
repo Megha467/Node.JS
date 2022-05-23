@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/main.css"> 
+    <title>Product Detail</title>
+</head>
+<body>
+    <!-- <%- include('layout/navbar')%>
+    <h1>Product Detail</h1>
+    <h1><%=product.title%></h1>
+    <h4><%=product.price%></h4> -->
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/main.css"> 
+    <title>New Product</title>
+</head>
+<body>
+    
+    <%- include('layout/navbar')%>
+    <h1>Edit Product</h1>
+   
+    <h1>Product Detail</h1>
+    <h1> <%=product.title%></h1>
+    <h4><%=product.price%></h4>
+    <h4>In ID<%=product._id%></h4>
+
+
+
+    <form action="/products/update/<%=product._id%>" method="POST" enctype="multipart">
+        <label>Title:</label>
+        <input type="text" name="title"  value=<%=product.title%> />
+        <br>
+        <label>Price:</label>
+        <input type="text" name="price" value = <%=product.price%> />
+        <br>
+        <!-- <label>Image:</label>
+        <input type="file" name="image" /> -->
+
+        <input type="submit" value="Edit"/>
+        
+    </form>
+    <button><a href="/products/delete/<%=product._id%>">Delete</a></button>
+</body>
+</html>
+    <!-- <img src=<%='/images/'+product.image%> width="300"/> -->
+</body>
+</html>
